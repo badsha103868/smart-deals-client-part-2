@@ -7,17 +7,26 @@ const MyBids = () => {
   const { user } = use(AuthContext);
   // state
   const [bids, setBids] = useState([]);
+   
+  // access token 
+  console.log('access token ', user.accessToken)
+
   // bids data load
   useEffect(() => {
     if (user?.email) {
-      fetch(`http://localhost:3000/bids?email=${user.email}`)
+      fetch(`http://localhost:3000/bids?email=${user.email}`, {
+         headers: {
+          authorization : `Bearer ${user.accessToken}`
+        }
+        
+      })
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
           setBids(data);
         });
     }
-  }, [user?.email]);
+  }, [user]);
 
   // delete
   const handleDeleteBid =(_id)=>{

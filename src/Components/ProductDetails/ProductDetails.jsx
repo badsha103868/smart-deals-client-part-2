@@ -13,6 +13,7 @@ const ProductDetails = () => {
   console.log(product);
 
   const { user } = use(AuthContext);
+  console.log(user)
 
   const {
     title,
@@ -91,11 +92,25 @@ const ProductDetails = () => {
     <div>
       {/*product info */}
       <div>
-        <div></div>
-        <div>
-          <button onClick={handleBidModalOpen} className="btn btn-primary">
+        <div className=" mx-auto p-6 bg-white shadow-lg rounded-xl mt-10">
+      <img src={image} alt={title} className="w-full h-[500px] object-cover rounded-xl" />
+      <h2 className="text-3xl font-semibold mt-4">{title}</h2>
+      <p className="text-gray-700 mt-2">{description}</p>
+
+      <div className="mt-4">
+        <p><strong>Price Range:</strong> {price_min} - {price_max} ৳</p>
+        <p><strong>Condition:</strong> {condition}</p>
+        <p><strong>Usage:</strong> {usage}</p>
+        <p><strong>Seller:</strong> {seller_name}</p>
+        <p><strong>Location:</strong> {location}</p>
+        <p><strong>Contact:</strong> {seller_contact}</p>
+      </div>
+       <button onClick={handleBidModalOpen} className="btn btn-primary w-full mt-3">
             I want to Buy this Product
           </button>
+    </div>
+        <div>
+         
           {/* Open the modal using document.getElementById('ID').showModal() method */}
 
           <dialog ref={bidModalRef} className="modal ">
@@ -135,7 +150,8 @@ const ProductDetails = () => {
                     name="email"
                     readOnly
                     defaultValue={user?.email}
-                  />
+                  /> 
+                 
 
                   {/* bid amount */}
 
@@ -166,7 +182,7 @@ const ProductDetails = () => {
       {/*bids for this product */}
       <div>
         <h3 className="text-3xl font-bold">
-          Bids For This Products:{" "}
+          Bids For This Products:
           <span className="text-primary">{bids.length}</span>
         </h3>
         {/* table */}
