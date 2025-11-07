@@ -1,14 +1,19 @@
 import React, { use } from 'react';
 import { AuthContext } from '../../Context/AuthContexts';
+import { useNavigate } from 'react-router';
 
 const Register = () => {
    
   const { signInWithGoogle } = use(AuthContext);
+  const navigate = useNavigate()
 
   const handleGoogleSignIn=()=>{
            signInWithGoogle()
            .then(result=>{
             console.log(result.user);
+            // navigate to the home page 
+            navigate('/')
+
           const newUser = {
             name: result.user.displayName,
             email: result.user.email,

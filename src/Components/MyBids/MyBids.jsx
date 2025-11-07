@@ -1,34 +1,46 @@
 import React, { use, useEffect, useState } from "react";
 import { AuthContext } from "../../Context/AuthContexts";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const MyBids = () => {
   // email ar asa kina check
   const { user } = use(AuthContext);
   // state
   const [bids, setBids] = useState([]);
+  // axiosSecure
+  const axiosSecure = useAxiosSecure();
    
   // access token 
   console.log('access token ', user.accessToken)
+   
+  // recap   axios secure diya token naua
+  useEffect(()=>{
+     axiosSecure.get(`/bids?email=${user.email}`)
+     .then(data =>{
+      setBids(data.data)
+     })
+  },[user, axiosSecure])
 
-  // local storage theke token naua
 
-  useEffect(() => {
-    if (user?.email) {
-      fetch(`http://localhost:3000/bids?email=${user.email}`, {
-         headers: {
-          authorization : `Bearer ${localStorage.getItem('token')}`
-        }
+  // // local storage theke token naua
+
+  // useEffect(() => {
+  //   if (user?.email) {
+  //     fetch(`http://localhost:3000/bids?email=${user.email}`, {
+  //        headers: {
+  //         authorization : `Bearer ${localStorage.getItem('token')}`
+  //       }
         
         
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-          setBids(data);
-        });
-    }
-  }, [user]);
+  //     })
+  //       .then((res) => res.json())
+  //       .then((data) => {
+  //         console.log(data);
+  //         setBids(data);
+  //       });
+  //   }
+  // }, [user]);
    
   // bids data load
 
